@@ -73,7 +73,7 @@ Get-ChildItem $SourceDirectory\*.csv | ForEach-Object {
         $range = $csvSheet.Range("CP2:CP$rowCount")
         $range.Copy() | Out-Null
 
-        # Paste Column C to C and Autofit Width
+        # Paste Column CP to C and Autofit Width
         $range = $xlsSheet.Range("C1:C$rowCount")
         $xlsSheet.Paste($range) | Out-Null
         $xlsSheet.UsedRange.Columns.Autofit() | Out-Null
