@@ -32,7 +32,7 @@ $wb = $excel.Workbooks.Add()
 Get-ChildItem $SourceDirectory\*.csv | ForEach-Object {
     # Skip Empty CSV Files
     if ((Import-Csv $_.FullName).Length -gt 0) {
-        Write-Host "INFO | Processing CSV file: $_.FullName"
+        Write-Host "INFO | Processing CSV file: $_.Name"
         # Open CSV File
         $csvBook = $excel.Workbooks.Open($_.FullName)
         # Set Sheet Index to Interact
