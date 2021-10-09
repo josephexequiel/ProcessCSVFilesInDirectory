@@ -28,11 +28,15 @@ $excel.DisplayAlerts = $false
 # Create New Excel Workbook
 $wb = $excel.Workbooks.Add()
 
+# Load System Libraries
+[void] [System.Reflection.Assembly]::LoadWithPartialName("System.Drawing")
+[void] [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
+
 # Loop Through Each CSV in SourceDirectory
 Get-ChildItem $SourceDirectory\*.csv | ForEach-Object {
     # Skip Empty CSV Files
     if ((Import-Csv $_.FullName).Length -gt 0) {
-        Write-Host "INFO | Processing CSV file: $_.Name"
+        Write-Host "INFO | Processing CSV file: $_"
         # Open CSV File
         $csvBook = $excel.Workbooks.Open($_.FullName)
         # Set Sheet Index to Interact
