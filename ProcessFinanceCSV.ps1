@@ -1,4 +1,4 @@
-﻿$SourceDirectory = "D:\CustomerAccount\"
+$SourceDirectory = "D:\CustomerAccount\"
 $OutputExcelFile = "D:\Output.xlsx"
 
 Write-Host "INFO | Finance tool started"
@@ -23,6 +23,8 @@ if (Test-Path $OutputExcelFile)
 $excel = New-Object -ComObject Excel.Application
 # Set Excel View
 $excel.Visible = $false
+# Set Display Alert
+$excel.DisplayAlerts = $false
 # Create New Excel Workbook
 $wb = $excel.Workbooks.Add()
 
@@ -56,7 +58,7 @@ Get-ChildItem $SourceDirectory\*.csv | ForEach-Object {
         $xlsSheet.UsedRange.Columns.Autofit() | Out-Null
         # Set Column to Number Format
         $xlsSheet.Range("A2:A$rowCount").NumberFormat = "0.0000"
-
+        [System.Windows.Forms.Clipboard]::Clear()
 
         # Copy Column T to Clipboard
         $csvSheet.Activate() | Out-Null
@@ -67,16 +69,18 @@ Get-ChildItem $SourceDirectory\*.csv | ForEach-Object {
         $range = $xlsSheet.Range("B1:B$rowCount")
         $xlsSheet.Paste($range) | Out-Null
         $xlsSheet.UsedRange.Columns.Autofit() | Out-Null
+        [System.Windows.Forms.Clipboard]::Clear()
 
         # Copy Column CP to Clipboard
         $csvSheet.Activate() | Out-Null
         $range = $csvSheet.Range("CP2:CP$rowCount")
         $range.Copy() | Out-Null
 
-        # Paste Column CP to C and Autofit Width
+        # Paste Column C to C and Autofit Width
         $range = $xlsSheet.Range("C1:C$rowCount")
         $xlsSheet.Paste($range) | Out-Null
         $xlsSheet.UsedRange.Columns.Autofit() | Out-Null
+        [System.Windows.Forms.Clipboard]::Clear()
 
         # Close CSV
         $csvBook.Close($false) | Out-Null
